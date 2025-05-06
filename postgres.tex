@@ -1,0 +1,133 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{parskip}
+
+% Font setup
+\setmainfont{DejaVu Sans}
+\newfontfamily\titlefont{DejaVu Sans Bold}
+\newfontfamily\codefont{DejaVu Sans Mono}[Scale=0.85]
+
+% Colors
+\definecolor{blueheader}{RGB}{30, 144, 255}
+\definecolor{greenheader}{RGB}{50, 205, 50}
+\definecolor{purpleheader}{RGB}{147, 112, 219}
+\definecolor{codebg}{RGB}{240, 240, 240}
+\definecolor{codeframe}{RGB}{200, 200, 200}
+
+% Listings style
+\lstset{
+    basicstyle=\codefont,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    framerule=0pt,
+    framesep=3pt,
+    rulecolor=\color{codeframe},
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    aboveskip=5pt,
+    belowskip=5pt
+}
+
+\begin{document}
+\pagestyle{empty}
+\setlength{\columnsep}{20pt}
+\begin{multicols}{2}
+
+% Left Column (Blue)
+{\titlefont\color{blueheader}\Large PSQL Magic}\vspace{5pt}
+
+\textbf{\color{blueheader}Basic Commands}
+\begin{lstlisting}
+psql -U postgres  # Connect
+\?               # Show help
+\q               # Quit
+\l               # List databases
+\c dbname        # Connect to DB
+\x               # Toggle pretty-format
+\! ls            # Run shell command
+\end{lstlisting}
+
+\textbf{\color{blueheader}Inspection}
+\begin{lstlisting}
+\d table         # Describe table
+\d+ table        # Detailed table info
+\dt *.*          # List all tables
+\di              # List indexes
+\dv              # List views
+\df              # List functions
+\dy              # List events
+\dn              # List schemas
+\dx              # List extensions
+\du              # List users
+\des+            # List foreign servers
+\end{lstlisting}
+
+\textbf{\color{blueheader}Export Data}
+\begin{lstlisting}
+\copy (SELECT * FROM table) 
+TO 'file.csv' WITH CSV
+\end{lstlisting}
+
+\columnbreak
+
+% Right Column (Green)
+{\titlefont\color{greenheader}\Large Administration}\vspace{5pt}
+
+\textbf{\color{greenheader}Service Control}
+\begin{lstlisting}
+sudo service postgresql start
+sudo service postgresql stop
+sudo service postgresql restart
+\end{lstlisting}
+
+\textbf{\color{greenheader}Logging}
+\begin{lstlisting}
+# In postgresql.conf:
+log_min_messages = debug5
+log_line_prefix = '%t %u %d %a '
+tail -f /var/log/postgresql.log
+\end{lstlisting}
+
+{\titlefont\color{purpleheader}\Large Useful Queries}\vspace{5pt}
+
+\textbf{\color{purpleheader}Space Usage}
+\begin{lstlisting}
+SELECT pg_size_pretty(
+  pg_total_relation_size('table')
+);
+
+SELECT pg_size_pretty(
+  pg_database_size('dbname')
+);
+\end{lstlisting}
+
+\textbf{\color{purpleheader}Activity Monitoring}
+\begin{lstlisting}
+SELECT * FROM pg_stat_activity 
+WHERE datname='dbname';
+
+SELECT * FROM pg_stat_activity 
+WHERE waiting='t';
+\end{lstlisting}
+
+\textbf{\color{purpleheader}Permissions}
+\begin{lstlisting}
+SELECT grantee, privilege_type 
+FROM information_schema.role_table_grants
+WHERE table_name='mytable';
+\end{lstlisting}
+
+\textbf{\color{purpleheader}Kill Connections}
+\begin{lstlisting}
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity 
+WHERE datname = current_database() 
+AND pid <> pg_backend_pid();
+\end{lstlisting}
+
+\end{multicols}
+\end{document}
