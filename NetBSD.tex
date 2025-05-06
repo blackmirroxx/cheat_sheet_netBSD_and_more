@@ -1,0 +1,144 @@
+
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{fontawesome5}
+
+% Font setup
+\setmainfont{DejaVu Sans}
+\newfontfamily\titlefont{DejaVu Sans Bold}
+\newfontfamily\codefont{DejaVu Sans Mono}[Scale=0.85]
+
+% Colors
+\definecolor{blueheader}{RGB}{30, 144, 255}
+\definecolor{neonorangeheader}{RGB}{255, 92, 0}
+\definecolor{codebg}{RGB}{240, 240, 240}
+\definecolor{codeframe}{RGB}{200, 200, 200}
+
+% Listings style
+\lstset{
+    basicstyle=\codefont,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    framerule=0pt,
+    framesep=3pt,
+    rulecolor=\color{codeframe},
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    aboveskip=5pt,
+    belowskip=5pt
+}
+
+\begin{document}
+\pagestyle{empty}
+
+% Title
+{\titlefont\large \color{neonorangeheader}NetBSD Cheat Sheet}\\
+\rule{\linewidth}{0.5pt}
+\vspace{0.5em}
+
+\setlength{\columnsep}{20pt}
+\begin{multicols}{2}
+
+% Left Column (Networking)
+{\titlefont\color{blueheader}\faNetworkWired\quad Network Configuration}\vspace{5pt}
+
+\textbf{\color{blueheader}Set Static IP}
+\begin{lstlisting}
+$ cat /etc/ifconfig.fxp0  
+up  
+inet 192.168.0.1 netmask 0xffffff00
+\end{lstlisting}
+
+\textbf{\color{blueheader}DHCP Setup}
+\begin{lstlisting}
+$ cat /etc/ifconfig.re0  
+up  
+!dhcpcd $int
+\end{lstlisting}
+
+\textbf{\color{blueheader}IPv6 Address}
+\begin{lstlisting}
+inet6 2001:dead:beef:1::1 prefixlen 64
+\end{lstlisting}
+
+\textbf{\color{blueheader}Static Route with DHCP}
+\begin{lstlisting}
+$ cat /etc/ifconfig.re0  
+up  
+!dhcpcd $int
+!route -n add -net 10.0.0.0/8 192.168.0.254
+\end{lstlisting}
+
+\textbf{\color{blueheader}Alias on Interface}
+\begin{lstlisting}
+inet 172.16.0.1 netmask 0xffffffff alias
+\end{lstlisting}
+
+\vfill\null\columnbreak
+
+% Right Column (System and Tools)
+{\titlefont\color{blueheader}\faTools\quad System & Utilities}\vspace{5pt}
+
+\textbf{\color{blueheader}WPA WiFi Client}
+\begin{lstlisting}
+# wpa_passphrase WPA-SSID password > /etc/wpa_supplicant.conf
+$ grep wpa /etc/rc.conf
+wpa_supplicant=YES
+wpa_supplicant_flags="-B -iath0 -c/etc/wpa_supplicant.conf"
+# /etc/rc.d/wpa_supplicant start
+\end{lstlisting}
+
+\textbf{\color{blueheader}Post-boot WiFi Filesystems}
+\begin{lstlisting}
+critical_filesystems_local="${critical_filesystems_local} /usr"
+\end{lstlisting}
+
+\textbf{\color{blueheader}Upgrade with Binaries}
+\begin{lstlisting}
+# cp /netbsd /netbsd.old
+# tar zxvfp kern-MONOLITHIC.tgz -C /
+# shutdown -r now
+# for i in base comp games man misc modules ...; do 
+  tar zxvfp $i.tgz -C /; 
+done
+# postinstall -s /tmp/temproot check
+# etcupdate -s /tmp/temproot
+\end{lstlisting}
+
+\textbf{\color{blueheader}Build from Source}
+\begin{lstlisting}
+# cd /usr/src
+# ./build.sh -O ../obj -T ../tools -U distribution
+# ./build.sh -O ../obj -T ../tools kernel=YOUR_KERNEL
+# cp /netbsd /netbsd.old
+# cp /usr/obj/.../netbsd /
+# shutdown -r now
+# ./build.sh -O ../obj -T ../tools -U install=/
+# /usr/sbin/etcupdate -s /usr/src
+\end{lstlisting}
+
+\textbf{\color{blueheader}Flash Plugin Support}
+\begin{lstlisting}
+# echo "procfs /emul/linux/proc procfs ro,linux" >> /etc/fstab
+# mount /emul/linux/proc
+# cd /usr/pkgsrc/www/nspluginwrapper && make install
+# cd /usr/pkgsrc/multimedia/ns-flash && make install
+$ nspluginwrapper -i /usr/pkg/lib/netscape/plugins/libflashplayer.so
+\end{lstlisting}
+
+\textbf{\color{blueheader}Mount ISO Image}
+\begin{lstlisting}
+# vnconfig -v -c /dev/vnd0d output.iso
+# mount -t cd9660 /dev/vnd0a /mnt
+# umount /mnt
+# vnconfig -u vnd0d
+\end{lstlisting}
+
+\end{multicols}
+\end{document}
