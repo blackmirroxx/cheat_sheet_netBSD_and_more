@@ -3,144 +3,153 @@
 \usepackage[margin=0.5in]{geometry}
 \usepackage{fontspec}
 \usepackage{xcolor}
-\usepackage{multicol}
+\usepackage{listings}
 \usepackage{parskip}
-\usepackage{array}
+\usepackage{multicol}
 
-% Font setup
-\setmainfont{DejaVu Sans}
+% Font
+\setmonofont{DejaVu Sans Mono}
 
-% Color definitions
-\definecolor{headercolor}{RGB}{0, 102, 204}
-\definecolor{lightgray}{gray}{0.95}
-
-% Custom command for headers
-\newcommand{\cheatsection}[1]{%
-  \vspace{1em}
-  {\large\color{headercolor}\textbf{#1}}\par
-  \vspace{0.3em}
-  \hrule
-  \vspace{0.5em}
+% Listings setup
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    columns=fullflexible,
+    keepspaces=true,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false
 }
 
 \begin{document}
 \pagestyle{empty}
 \begin{center}
-    {\Huge\color{headercolor}\textbf{Regular Expressions Cheat Sheet}}
+    {\Huge\textbf{Regular Expressions Cheat Sheet}}
 \end{center}
 
 \begin{multicols}{2}
 
-\cheatsection{Metacharacters (must be escaped)}
-\begin{tabular}{>{\ttfamily}ll}
-^ & Start of string \\
-$ & End of string \\
-( ) & Grouping \\
-< > & Word boundaries \\
-. & Any character \\
-* + ? & Quantifiers \\
-[ ] & Character class \\
-{ } & Repetition \\
-\textbackslash & Escape \\
-| & Alternation \\
-\end{tabular}
+\section*{Metacharacters (must be escaped)}
+\begin{lstlisting}
+Symbol     Meaning
+------     -----------------------
+^          Start of string
+$          End of string
+( )        Grouping
+< >        Word boundaries
+.          Any character
+* + ?      Quantifiers
+[ ]        Character class
+{ }        Repetition
+\          Escape
+|          Alternation
+\end{lstlisting}
 
-\cheatsection{Quantifiers}
-\begin{tabular}{>{\ttfamily}ll}
-* & 0 or more \\
-+ & 1 or more \\
-? & 0 or 1 \\
-\{3\} & Exactly 3 \\
-\{3,\} & 3 or more \\
-\{3,5\} & 3, 4 or 5 \\
-\end{tabular}
+\section*{Quantifiers}
+\begin{lstlisting}
+Symbol     Meaning
+------     -----------------------
+*          0 or more
++          1 or more
+?          0 or 1
+{3}        Exactly 3
+{3,}       3 or more
+{3,5}      3 to 5
+\end{lstlisting}
 
-\cheatsection{Anchors}
-\begin{tabular}{>{\ttfamily}ll}
-^, \textbackslash A & Start of string \\
-$, \textbackslash Z & End of string \\
-\textbackslash b & Word boundary \\
-\textbackslash B & Not word boundary \\
-\textbackslash <, \textbackslash > & Word boundaries \\
-\end{tabular}
+\section*{Anchors}
+\begin{lstlisting}
+Symbol     Meaning
+------     -----------------------
+^, \A      Start of string
+$, \Z      End of string
+\b         Word boundary
+\B         Not word boundary
+\<, \>     Word boundaries
+\end{lstlisting}
 
-\cheatsection{POSIX Classes}
-\begin{tabular}{>{\ttfamily}ll}
-[:upper:] & Upper case letters \\
-[:lower:] & Lower case letters \\
-[:alpha:] & All letters \\
-[:alnum:] & Letters and digits \\
-[:digit:], [:xdigit:] & Decimal / Hex digits \\
-[:punct:] & Punctuation \\
-[:blank:], [:space:] & Whitespace \\
-[:cntrl:] & Control characters \\
-[:graph:], [:print:] & Printable \\
-[:word:] & Word characters \\
-\end{tabular}
+\section*{POSIX Classes}
+\begin{lstlisting}
+[:upper:]    Uppercase letters
+[:lower:]    Lowercase letters
+[:alpha:]    All letters
+[:alnum:]    Letters and digits
+[:digit:]    Digits
+[:xdigit:]   Hex digits
+[:punct:]    Punctuation
+[:space:]    Space characters
+[:word:]     Letters, digits, underscore
+\end{lstlisting}
 
-\cheatsection{Character Classes}
-\begin{tabular}{>{\ttfamily}ll}
-\textbackslash c & Control character \\
-\textbackslash s, \textbackslash S & Whitespace / not whitespace \\
-\textbackslash d, \textbackslash D & Digit / not digit \\
-\textbackslash w, \textbackslash W & Word / not word \\
-\textbackslash x, \textbackslash O & Hex / octal digit \\
-\end{tabular}
+\section*{Character Classes}
+\begin{lstlisting}
+Symbol     Meaning
+------     -----------------------
+\c         Control character
+\s, \S     Whitespace / not whitespace
+\d, \D     Digit / not digit
+\w, \W     Word / not word
+\x, \O     Hex / Octal digit
+\end{lstlisting}
 
-\cheatsection{Special Characters}
-\begin{tabular}{>{\ttfamily}ll}
-\textbackslash n & Newline \\
-\textbackslash r & Carriage return \\
-\textbackslash t & Tab \\
-\textbackslash v & Vertical tab \\
-\textbackslash f & Form feed \\
-\textbackslash xxx & Octal character \\
-\textbackslash xhh & Hex character \\
-\end{tabular}
+\section*{Special Characters}
+\begin{lstlisting}
+Symbol     Meaning
+------     -----------------------
+\n         Newline
+\r         Carriage return
+\t         Tab
+\v         Vertical tab
+\f         Form feed
+\xxx       Octal character
+\xhh       Hex character
+\end{lstlisting}
 
-\cheatsection{Pattern Modifiers}
-\begin{tabular}{>{\ttfamily}ll}
-g & Global match \\
-i & Case-insensitive \\
-m & Multi-line \\
-s & Dot matches newline \\
-x & Allow whitespace/comments \\
-e & Evaluate replacement \\
-U & Ungreedy \\
-\end{tabular}
+\section*{Pattern Modifiers}
+\begin{lstlisting}
+g      Global match
+i      Case-insensitive
+m      Multi-line
+s      Dot matches newline
+x      Allow whitespace/comments
+e      Evaluate replacement
+U      Ungreedy
+\end{lstlisting}
 
-\cheatsection{Assertions}
-\begin{tabular}{>{\ttfamily}ll}
-(?=...) & Lookahead \\
-(?!...) & Negative lookahead \\
-(?<=...) & Lookbehind \\
-(?<!...) & Negative lookbehind \\
-(?>...) & Atomic group \\
-(?()|) & Conditional \\
-(?#...) & Comment \\
-\end{tabular}
+\section*{Assertions}
+\begin{lstlisting}
+(?=...)   Lookahead
+(?!...)   Negative lookahead
+(?<=...)  Lookbehind
+(?<!...)  Negative lookbehind
+(?>...)   Atomic group
+(?()|)    Conditional
+(?#...)   Comment
+\end{lstlisting}
 
-\cheatsection{Replacement Tokens}
-\begin{tabular}{>{\ttfamily}ll}
-\$n & nth non-passive group \\
-\$1, \$2 & Match from group 1, 2 \\
-\$\` & Before match \\
-\$' & After match \\
-\$+ & Last match \\
-\$& & Entire match \\
-\end{tabular}
+\section*{Replacement Tokens}
+\begin{lstlisting}
+$n      nth non-passive group
+$1, $2  Match from group 1, 2
+$`      Before match
+$'      After match
+$+      Last match
+$&      Entire match
+\end{lstlisting}
 
-\cheatsection{Sample Patterns}
-\begin{tabular}{>{\ttfamily}p{0.44\textwidth}}
-([A-Za-z0-9-]+): Letters, numbers and hyphens \\
-(\d{1,2}/\d{1,2}/\d{4}): Date format \\
-([^\s]+(?=\.(jpg|gif|png))\.\2): Image extensions \\
-(^[1-9]$|^[1-4][0-9]$|^50$): Number 1–50 \\
-(#?([A-Fa-f0-9]){3}(([A-Fa-f0-9]){3})?): Hex color \\
-((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}): Strong password \\
-(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}): Email \\
-(\<(/?[^\>]+)\>): HTML tags \\
-\end{tabular}
+\section*{Sample Patterns}
+\begin{lstlisting}
+([A-Za-z0-9-]+)                  Alphanumeric + hyphens
+(\d{1,2}/\d{1,2}/\d{4})          Date (e.g. 21/3/2006)
+([^\s]+(?=\.(jpg|gif|png))\.\2)  Image extensions
+(^[1-9]$|^[1-4][0-9]$|^50$)      Number 1–50
+(#?([A-Fa-f0-9]){3,6})           Hex color code
+(?=.*\d)(?=.*[a-z])(?=.*[A-Z])   Strong password
+(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}) Email
+(\<(/?[^\>]+)\>)                 HTML tags
+\end{lstlisting}
 
 \end{multicols}
 \end{document}
