@@ -13,6 +13,8 @@
 % Colors
 \definecolor{blue1}{RGB}{10,0,255}
 \definecolor{cyan1}{RGB}{0,150,255}
+\definecolor{green1}{RGB}{0,255,80}
+\definecolor{yellow1}{RGB}{220,150,0}
 
 % Listings setup
 \lstset{
@@ -63,8 +65,8 @@ Symbol     Meaning
 {3,5}      3 to 5
 \end{lstlisting}
 
-\section*{Anchors}
-\begin{lstlisting}
+\section*{\textcolor{green1}{Anchors}}
+\begin{lstlisting}[frame=single, rulecolor=\color{green1!70}, backgroundcolor=\color{green1!20}]
 Symbol     Meaning
 ------     -----------------------
 ^, \A      Start of string
@@ -74,8 +76,8 @@ $, \Z      End of string
 \<, \>     Word boundaries
 \end{lstlisting}
 
-\section*{POSIX Classes}
-\begin{lstlisting}
+\section*{\textcolor{yellow1}{POSIX Classes}}
+\begin{lstlisting}[frame=single, rulecolor=\color{yellow1!70}, backgroundcolor=\color{yellow1!20}]
 [:upper:]    Uppercase letters
 [:lower:]    Lowercase letters
 [:alpha:]    All letters
