@@ -20,6 +20,7 @@
 \definecolor{yellow1}{RGB}{220,150,0}
 \definecolor{yellow2}{RGB}{220,100,0}
 \definecolor{red1}{RGB}{255,0,0}
+\definecolor{red2}{RGB}{255,50,0}
 
 % Listings setup
 \lstset{
@@ -150,8 +151,8 @@ $+      Last match
 $&      Entire match
 \end{lstlisting}
 
-\section*{Sample Patterns}
-\begin{lstlisting}
+\section*{\textcolor{red2}{Sample Patterns}}
+\begin{lstlisting}[frame=single, rulecolor=\color{red2!70}, backgroundcolor=\color{red2!20}]
 ([A-Za-z0-9-]+)                  Alphanumeric + hyphens
 (\d{1,2}/\d{1,2}/\d{4})          Date (e.g. 21/3/2006)
 ([^\s]+(?=\.(jpg|gif|png))\.\2)  Image extensions
