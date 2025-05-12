@@ -1,0 +1,138 @@
+
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+
+% Font
+\setmonofont{DejaVu Sans Mono}
+
+% Listings setup
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!20},
+    frame=single,
+    columns=fullflexible,
+    keepspaces=true,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false
+}
+
+% Box style
+\newtcblisting{cheatbox}[2][]{%
+    colback=gray!5, colframe=black, coltitle=black,
+    title={#1},
+    listing only,
+    listing options={basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible},
+    breakable
+}
+
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+    {\Huge\textbf{Gentoo Cheat Sheet}}
+\end{center}
+
+\begin{multicols}{2}
+
+\begin{cheatbox}[Repository Sync]{}
+emaint --auto sync
+emaint -a sync
+emerge-webrsync
+eix-sync
+\end{cheatbox}
+
+\begin{cheatbox}[Package Listing]{}
+qlist -IRv
+eix --world | less
+equery list --duplicates '*'
+equery y firefox
+\end{cheatbox}
+
+\begin{cheatbox}[Install & Emerge]{}
+emerge -pv www-client/firefox
+emerge -av www-client/firefox
+emerge --ask =www-client/firefox-96.0.1
+emerge --noreplace firefox
+emerge -a1 www-client/firefox
+\end{cheatbox}
+
+\begin{cheatbox}[Package Removal]{}
+emerge --deselect www-client/firefox
+emerge --pretend --depclean
+emerge --ask --depclean
+emerge --ask --verbose --depclean www-client/firefox
+\end{cheatbox}
+
+\begin{cheatbox}[System Upgrade]{}
+emerge -avuDU --with-bdeps=y @world
+emerge --quiet --update --changed-use --deep @world
+\end{cheatbox}
+
+\begin{cheatbox}[Troubleshooting]{}
+revdep-rebuild -v
+equery b `which vim`
+e-file vim
+equery d www-client/firefox
+\end{cheatbox}
+
+\begin{cheatbox}[Rebuilds]{}
+emerge @module-rebuild
+emerge @preserved-rebuild
+\end{cheatbox}
+
+\begin{cheatbox}[USE Flags]{}
+euse -i X
+equery hasuse mysql
+equery uses <package>
+eix --installed-with-use mysql
+echo 'dev-util/cmake -qt5' >> /etc/portage/package.use
+\end{cheatbox}
+
+\begin{cheatbox}[Important Files]{}
+/etc/portage/make.conf
+/etc/portage/package.use
+/etc/portage/package.mask
+/etc/portage/package.license
+/var/lib/portage/world
+\end{cheatbox}
+
+\begin{cheatbox}[OpenRC Services]{}
+rc-update add sshd default
+rc-service sshd start
+rc-service sshd status
+rc-status --all
+\end{cheatbox}
+
+\begin{cheatbox}[Systemd Services]{}
+systemctl enable sshd
+systemctl start sshd
+systemctl status sshd
+\end{cheatbox}
+
+\begin{cheatbox}[Logging & Build Times]{}
+genlop -l | tail -n 10
+genlop -t libreoffice
+emerge -pU @world | genlop --pretend
+watch genlop -unc
+\end{cheatbox}
+
+\begin{cheatbox}[Overlay Management]{}
+eselect repository list
+eselect repository list -i
+\end{cheatbox}
+
+\begin{cheatbox}[Tips & Cache]{}
+emerge --regen
+emerge -s "%^python$"
+qcheck vim-core
+\end{cheatbox}
+
+\end{multicols}
+\end{document}
