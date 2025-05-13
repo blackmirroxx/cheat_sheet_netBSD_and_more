@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2025.5.6)  13 MAY 2025 14:22
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2025.5.6)  13 MAY 2025 14:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -899,10 +899,10 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 
 ] (./gentoo.aux) ) 
 Here is how much of TeX's memory you used:
- 22558 strings out of 476689
- 529668 string characters out of 5806614
- 2023018 words of memory out of 6000000
- 42421 multiletter control sequences out of 15000+600000
+ 22555 strings out of 476689
+ 529632 string characters out of 5806614
+ 2022018 words of memory out of 6000000
+ 42418 multiletter control sequences out of 15000+600000
  512431 words of font info for 50 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,5n,104p,520b,1434s stack positions out of 10000i,1000n,20000p,200000b,200000s
