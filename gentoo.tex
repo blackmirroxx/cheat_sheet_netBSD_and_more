@@ -56,15 +56,7 @@
 	fonttitle=\bfseries,
 	title=#1,
 	listing only,
-	listing options={
-		basicstyle=\ttfamily\tiny\color{white},
-		keywordstyle=\color{mygreen}, % make keywords green
-		morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect},
-		escapeinside={(*}{*)}, % Added for special characters
-		breaklines=true,
-		columns=fullflexible,
-		literate={\ \ }{{\ }}1  % Fix for spaces in listings
-	},
+	listing style=cheatsyntax,
 	boxrule=0.5pt,
 	arc=2pt,
 	left=2pt,
