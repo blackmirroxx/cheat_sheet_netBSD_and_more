@@ -16,6 +16,7 @@
 \definecolor{purple2}{HTML}{DDDFFF}
 \definecolor{white2}{HTML}{FEFEFE}
 \definecolor{mygreen}{HTML}{65FE08}
+\definecolor{myblue}{HTML}{89FF55}
 
 % Listings setup - fixed options
 \lstset{
@@ -72,7 +73,7 @@
 \begin{multicols}{2}
 
 \begin{cheatbox}{Repository Sync}
-emaint --auto sync
+emaint --auto \texttt{\textcolor{myblue}{sync}}
 emaint -a sync
 emerge-webrsync
 eix-sync
