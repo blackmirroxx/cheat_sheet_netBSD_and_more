@@ -15,6 +15,7 @@
 \definecolor{purple}{HTML}{6E56AF}
 \definecolor{purple2}{HTML}{DDDFFF}
 \definecolor{white2}{HTML}{FEFEFE}
+\definecolor{mygreen}{HTML}{65FE08}
 
 % Listings setup - fixed options
 \lstset{
@@ -29,6 +30,8 @@
 	showstringspaces=false,
 	escapeinside={(*}{*)}, % Added for special characters
 	literate={\ \ }{{\ }}1 % Fix for spaces in listings
+	keywordstyle=\color{mygreen}, % make keywords green
+	morekeywords={emerge,rc-service,rc-update,equery,e-file,eselect,eix,revdep-rebuild,qlist}
 }
 
 % Improved box style
