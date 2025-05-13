@@ -35,6 +35,19 @@
 	morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect} 
 }
 
+\lstdefinestyle{cheatsyntax}{
+  basicstyle=\ttfamily\tiny\color{white},
+  backgroundcolor=\color{black},
+  keywordstyle=\color{mygreen},
+  keywordstyle=[2]{\color{myblue}},
+  morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect},
+  morekeywords=[2]{sync,webrsync},
+  escapeinside={(*}{*)},
+  breaklines=true,
+  columns=fullflexible,
+  literate={\ \ }{{\ }}1
+}
+
 % Improved box style
 \newtcblisting{cheatbox}[1]{
 	colback=purple2,
