@@ -17,6 +17,7 @@
 \definecolor{white2}{HTML}{FEFEFE}
 \definecolor{mygreen}{HTML}{65FE08}
 \definecolor{myblue}{HTML}{90D5FF}
+\definecolor{mypink}{HTML}{FF6DAC}
 
 % Listings setup - fixed options
 \lstset{
@@ -40,8 +41,10 @@
   backgroundcolor=\color{black},
   keywordstyle=\color{mygreen},
   keywordstyle=[2]{\color{myblue}},
+  keywordstyle=[3]{\color{mypink}},
   morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect},
   morekeywords=[2]{sync,webrsync},
+  morekeywords=[3]{@},
   escapeinside={(*}{*)},
   breaklines=true,
   columns=fullflexible,
