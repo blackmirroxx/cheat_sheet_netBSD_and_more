@@ -1,180 +1,144 @@
-% compile :: xelatex --shell-escape zsh.tex
+
 \documentclass[10pt]{article}
 \usepackage[margin=0.5in]{geometry}
 \usepackage{fontspec}
 \usepackage{xcolor}
 \usepackage{listings}
-\usepackage{parskip}
 \usepackage{multicol}
-\usepackage[most]{tcolorbox}
+\usepackage{parskip}
 \usepackage{graphicx}
-\usepackage{svg}
-\usepackage{adjustbox}
+\usepackage{fontawesome5}
 
-% Font setup - added fallback fonts
-\setmonofont{DejaVu Sans Mono}
+% Font setup
+\setmainfont{DejaVu Sans}
+\newfontfamily\titlefont{DejaVu Sans Bold}
+\newfontfamily\codefont{DejaVu Sans Mono}[Scale=0.85]
 
-% Colors - defined missing color
-\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
-\definecolor{purple}{HTML}{6E56AF}
-\definecolor{purple2}{HTML}{DDDFFF}
-\definecolor{white2}{HTML}{FEFEFE}
+% Colors
+\definecolor{blueheader}{RGB}{30, 144, 255}
 \definecolor{mygreen}{HTML}{65FE08}
-\definecolor{myblue}{HTML}{90D5FF}
-\definecolor{mypink}{HTML}{FF6DAC}
+\definecolor{codebg}{HTML}{AAAACC}
+\definecolor{codeframe}{RGB}{200, 200, 200}
 
-% Listings setup - fixed options
+% Listings style
 \lstset{
-	basicstyle=\ttfamily\small\color{white},  % white default text 
-	backgroundcolor=\color{black},
-	frame=single,
-	columns=fullflexible,
-	keepspaces=true,
-	tabsize=2,
-	breaklines=true,
-	breakatwhitespace=true,
-	showstringspaces=false,
-	literate={\ \ }{{\ }}1,  % Fix for spaces in listings
-	escapeinside={(*}{*)}, % Added for special characters
-	keywordstyle=\color{mygreen}, % make keywords green
-	morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect,curl} 
-}
-
-\lstdefinestyle{cheatsyntax}{
-  basicstyle=\ttfamily\tiny\color{white},
-  backgroundcolor=\color{black},
-  keywordstyle=\color{mygreen},
-  keywordstyle=[2]{\color{myblue}},
-  keywordstyle=[3]{\color{mypink}},
-  morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect,curl},
-  morekeywords=[2]{sync,webrsync,fsSL},
-  morekeywords=[3]{@world,depclean,ohmyzsh},
-  escapeinside={(*}{*)},
-  breaklines=true,
-  columns=fullflexible,
-  literate={\ \ }{{\ }}1
-}
-
-% Improved box style
-\newtcblisting{cheatbox}[1]{
-	colback=purple2,
-	colframe=mygreen!100,
-	coltitle=black,
-	fonttitle=\bfseries,
-	title=#1,
-	listing only,
-	listing style=cheatsyntax,
-	boxrule=0.5pt,
-	arc=2pt,
-	left=2pt,
-	right=2pt,
-	top=2pt,
-	bottom=2pt,
-	before upper={\vspace{-3pt}},
-	breakable
+    basicstyle=\codefont,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    framerule=0pt,
+    framesep=3pt,
+    rulecolor=\color{codeframe},
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    aboveskip=5pt,
+    belowskip=5pt
 }
 
 \begin{document}
 \pagestyle{empty}
-\begin{center}
-	\includesvg[height=1.4cm]{logo} \hspace{1em}
-	{\Huge\textbf{\textcolor{mygreen}{Oh My Zsh Cheat Sheet}}}
-	\hspace{1em} \includesvg[height=1.4cm]{larry}\\
-	\vspace{5pt}
-	{\small\textit{Essential commands for Zsh cli}}
-\end{center}
 
+% Title
+{\titlefont\large \color{mygreen}Oh My Zsh Cheat Sheet}\\
+\rule{\linewidth}{0.5pt}
+\vspace{0.5em}
+
+\setlength{\columnsep}{20pt}
 \begin{multicols}{2}
 
-\begin{cheatbox}{Install oh-my-zsh}
-  sh -c "$\dollars$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-\end{cheatbox}
+% Left Column (Networking)
+{\titlefont\color{blueheader}\faNetworkWired\quad Network Configuration}\vspace{5pt}
 
-\begin{cheatbox}{Package Listing}
-qlist -IRv
-eix --world | less
-equery list --duplicates '*'
-equery y firefox
-\end{cheatbox}
+\textbf{\color{blueheader}Set Static IP}
+\begin{lstlisting}
+$ cat /etc/ifconfig.fxp0  
+up  
+inet 192.168.0.1 netmask 0xffffff00
+\end{lstlisting}
 
-\begin{cheatbox}{Install \& Emerge}
-emerge -pv www-client/firefox
-emerge -av www-client/firefox
-emerge --ask =www-client/firefox-96.0.1
-emerge --noreplace firefox
-emerge -a1 www-client/firefox
-\end{cheatbox}
+\textbf{\color{blueheader}DHCP Setup}
+\begin{lstlisting}
+$ cat /etc/ifconfig.re0  
+up  
+!dhcpcd $int
+\end{lstlisting}
 
-\begin{cheatbox}{Package Removal}
-emerge --deselect www-client/firefox
-emerge --pretend --depclean
-emerge --ask --depclean
-emerge --ask --verbose --depclean www-client/firefox
-\end{cheatbox}
+\textbf{\color{blueheader}IPv6 Address}
+\begin{lstlisting}
+inet6 2001:dead:beef:1::1 prefixlen 64
+\end{lstlisting}
 
-\begin{cheatbox}{System Upgrade}
-emerge -avuDU --with-bdeps=y @world
-emerge --quiet --update --changed-use --deep @world
-\end{cheatbox}
+\textbf{\color{blueheader}Static Route with DHCP}
+\begin{lstlisting}
+$ cat /etc/ifconfig.re0  
+up  
+!dhcpcd $int
+!route -n add -net 10.0.0.0/8 192.168.0.254
+\end{lstlisting}
 
-\begin{cheatbox}{Troubleshooting}
-revdep-rebuild -v
-equery b `which vim`
-e-file vim
-equery d www-client/firefox
-\end{cheatbox}
+\textbf{\color{blueheader}Alias on Interface}
+\begin{lstlisting}
+inet 172.16.0.1 netmask 0xffffffff alias
+\end{lstlisting}
 
-\begin{cheatbox}{Rebuilds}
-emerge @module-rebuild
-emerge @preserved-rebuild
-\end{cheatbox}
+\vfill\null\columnbreak
 
-\begin{cheatbox}{USE Flags}
-euse -i X
-equery hasuse mysql
-equery uses <package>
-eix --installed-with-use mysql
-echo 'dev-util/cmake -qt5' >> /etc/portage/package.use
-\end{cheatbox}
+% Right Column (System and Tools)
+{\titlefont\color{blueheader}\faTools\quad System & Utilities}\vspace{5pt}
 
-\begin{cheatbox}{Important Files}
-/etc/portage/make.conf
-/etc/portage/package.use
-/etc/portage/package.mask
-/etc/portage/package.license
-/var/lib/portage/world
-\end{cheatbox}
+\textbf{\color{blueheader}WPA WiFi Client}
+\begin{lstlisting}
+# wpa_passphrase WPA-SSID password > /etc/wpa_supplicant.conf
+$ grep wpa /etc/rc.conf
+wpa_supplicant=YES
+wpa_supplicant_flags="-B -iath0 -c/etc/wpa_supplicant.conf"
+# /etc/rc.d/wpa_supplicant start
+\end{lstlisting}
 
-\begin{cheatbox}{OpenRC Services}
-rc-update add sshd default
-rc-service sshd start
-rc-service sshd status
-rc-status --all
-\end{cheatbox}
+\textbf{\color{blueheader}Post-boot WiFi Filesystems}
+\begin{lstlisting}
+critical_filesystems_local="${critical_filesystems_local} /usr"
+\end{lstlisting}
 
-\begin{cheatbox}{Systemd Services}
-systemctl enable sshd
-systemctl start sshd
-systemctl status sshd
-\end{cheatbox}
+\textbf{\color{blueheader}Upgrade with Binaries}
+\begin{lstlisting}
+# cp /netbsd /netbsd.old
+# tar zxvfp kern-MONOLITHIC.tgz -C /
+# shutdown -r now
+# for i in base comp games man misc modules ...; do 
+  tar zxvfp $i.tgz -C /; 
+done
+# postinstall -s /tmp/temproot check
+# etcupdate -s /tmp/temproot
+\end{lstlisting}
 
-\begin{cheatbox}{Logging \& Build Times}
-genlop -l | tail -n 10
-genlop -t libreoffice
-emerge -pU @world | genlop --pretend
-watch genlop -unc
-\end{cheatbox}
+\textbf{\color{blueheader}Build from Source}
+\begin{lstlisting}
+# cd /usr/src
+# ./build.sh -O ../obj -T ../tools -U distribution
+# ./build.sh -O ../obj -T ../tools kernel=YOUR_KERNEL
+# cp /netbsd /netbsd.old
+# cp /usr/obj/.../netbsd /
+# shutdown -r now
+# ./build.sh -O ../obj -T ../tools -U install=/
+# /usr/sbin/etcupdate -s /usr/src
+\end{lstlisting}
 
-\begin{cheatbox}{Overlay Management}
-eselect repository list
-eselect repository list -i
-\end{cheatbox}
+\textbf{\color{blueheader}Flash Plugin Support}
+\begin{lstlisting}
+# echo "procfs /emul/linux/proc procfs ro,linux" >> /etc/fstab
+# mount /emul/linux/proc
+# cd /usr/pkgsrc/www/nspluginwrapper && make install
+# cd /usr/pkgsrc/multimedia/ns-flash && make install
+$ nspluginwrapper -i /usr/pkg/lib/netscape/plugins/libflashplayer.so
+\end{lstlisting}
 
-\begin{cheatbox}{Tips \& Cache}
-emerge --regen
-emerge -s "\%^python\$"
-qcheck vim-core
-\end{cheatbox}
+\textbf{\color{blueheader}Mount ISO Image}
+\begin{lstlisting}
+# vnconfig -v -c /dev/vnd0d output.iso
+# mount -t cd9660 /dev/vnd0a /mnt
+# umount /mnt
+# vnconfig -u vnd0d
+\end{lstlisting}
 
 \end{multicols}
 \end{document}
