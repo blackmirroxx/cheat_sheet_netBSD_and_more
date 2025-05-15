@@ -37,7 +37,7 @@
 	literate={\ \ }{{\ }}1,  % Fix for spaces in listings
 	escapeinside={(*}{*)}, % Added for special characters
 	keywordstyle=\color{mygreen}, % make keywords green
-	morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect} 
+	morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect,curl} 
 }
 
 \lstdefinestyle{cheatsyntax}{
@@ -46,9 +46,9 @@
   keywordstyle=\color{mygreen},
   keywordstyle=[2]{\color{myblue}},
   keywordstyle=[3]{\color{mypink}},
-  morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect},
-  morekeywords=[2]{sync,webrsync},
-  morekeywords=[3]{@world,depclean},
+  morekeywords={emerge,qlist,euse,equery,eix,emaint,eselect,curl},
+  morekeywords=[2]{sync,webrsync,fsSL},
+  morekeywords=[3]{@world,depclean,ohmyzsh},
   escapeinside={(*}{*)},
   breaklines=true,
   columns=fullflexible,
@@ -86,11 +86,8 @@
 
 \begin{multicols}{2}
 
-\begin{cheatbox}{Repository Sync}
-emaint --auto sync
-emaint -a sync
-emerge-webrsync
-eix-sync
+\begin{cheatbox}{Install oh-my-zsh}
+  sh -c "\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 \end{cheatbox}
 
 \begin{cheatbox}{Package Listing}
