@@ -15,7 +15,7 @@
 \newfontfamily\codefont{DejaVu Sans Mono}[Scale=0.85]
 
 % Colors
-\definecolor{blueheader}{RGB}{30, 144, 255}
+\definecolor{blueheader}{RGB}{90, 144, 160}
 \definecolor{mygreen}{HTML}{65FE08}
 \definecolor{codebg}{HTML}{DDCCCC}
 \definecolor{codeframe}{RGB}{200, 200, 200}
@@ -53,11 +53,10 @@
 sh -c "$\dollars$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 \end{lstlisting}
 
-\textbf{\color{blueheader}DHCP Setup}
+  \textbf{\color{blueheader}Walk}
 \begin{lstlisting}
-$ cat /etc/ifconfig.re0  
-up  
-!dhcpcd $int
+cd - # move back to previous directory
+[Ctrl] + [A] # move home
 \end{lstlisting}
 
 \textbf{\color{blueheader}IPv6 Address}
