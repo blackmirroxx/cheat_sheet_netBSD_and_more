@@ -47,7 +47,7 @@
 \begin{multicols}{2}
 
 % Left Column (Networking)
-{\titlefont\color{blueheader}\faNetworkWired\quad Network Configuration}\vspace{5pt}
+{\titlefont\color{blueheader}\faNetworkWired\quad Key bindings }\vspace{5pt}
 
 \textbf{\color{blueheader}Install oh-my-zsh}
 \begin{lstlisting}
@@ -77,23 +77,19 @@ cd -         # move back to previous directory
 [Ctrl] + [P] # Match word on line  
 \end{lstlisting}
 
-\textbf{\color{blueheader}Alias on Interface}
-\begin{lstlisting}
-inet 172.16.0.1 netmask 0xffffffff alias
-\end{lstlisting}
-
 \vfill\null\columnbreak
 
 % Right Column (System and Tools)
-{\titlefont\color{blueheader}\faTools\quad System & Utilities}\vspace{5pt}
+  {\titlefont\color{blueheader}\faTools\quad Commands && Globs}\vspace{5pt}
 
-\textbf{\color{blueheader}WPA WiFi Client}
+\textbf{\color{blueheader}Commands}
 \begin{lstlisting}
-# wpa_passphrase WPA-SSID password > /etc/wpa_supplicant.conf
-$ grep wpa /etc/rc.conf
-wpa_supplicant=YES
-wpa_supplicant_flags="-B -iath0 -c/etc/wpa_supplicant.conf"
-# /etc/rc.d/wpa_supplicant start
+fg  -> Restore process from suspend
+bg  -> Continue process in background  
+!!  -> Last command 
+!*  -> Last command's parameters 
+!^  -> Last command's first parameter 
+!$\dollars$  -> Last command's last parameter 
 \end{lstlisting}
 
 \textbf{\color{blueheader}Post-boot WiFi Filesystems}
