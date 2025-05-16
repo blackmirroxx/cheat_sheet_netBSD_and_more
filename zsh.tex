@@ -63,17 +63,18 @@ cd -         # move back to previous directory
 [Ctrl] + [B] # Back by word  
 \end{lstlisting}
 
-\textbf{\color{blueheader}IPv6 Address}
+\textbf{\color{blueheader} Edit}
 \begin{lstlisting}
-inet6 2001:dead:beef:1::1 prefixlen 64
+[Ctrl] + [U] # Clear to beginning of line 
+[Ctrl] + [K] # Kill to end of line
+[Ctrl] + [@] # Set Mark
+[Ctrl] + [_] # Undo
 \end{lstlisting}
 
-\textbf{\color{blueheader}Static Route with DHCP}
+\textbf{\color{blueheader}History}
 \begin{lstlisting}
-$ cat /etc/ifconfig.re0  
-up  
-!dhcpcd $int
-!route -n add -net 10.0.0.0/8 192.168.0.254
+[Ctrl] + [R] # Search 
+[Ctrl] + [P] # Match word on line  
 \end{lstlisting}
 
 \textbf{\color{blueheader}Alias on Interface}
