@@ -93,50 +93,22 @@ bg  -> Continue process in background
 !$  -> Last command's last parameter 
 \end{lstlisting}
 
-\textbf{\color{blueheader}Post-boot WiFi Filesystems}
+\textbf{\color{blueheader}Basic}
 \begin{lstlisting}
-critical_filesystems_local="${critical_filesystems_local} /usr"
+?         -> Any char
+*         -> Any string 
+[class]   -> Any single class
+[^class]  -> NOT from class -> use Regex 
+(foo|bar) -> alternative
+**        -> recursive dirs 
+***       -> recursive dirs and symlinks 
 \end{lstlisting}
 
-\textbf{\color{blueheader}Upgrade with Binaries}
+\textbf{\color{blueheader}Entries}
 \begin{lstlisting}
-# cp /netbsd /netbsd.old
-# tar zxvfp kern-MONOLITHIC.tgz -C /
-# shutdown -r now
-# for i in base comp games man misc modules ...; do 
-  tar zxvfp $i.tgz -C /; 
-done
-# postinstall -s /tmp/temproot check
-# etcupdate -s /tmp/temproot
-\end{lstlisting}
-
-\textbf{\color{blueheader}Build from Source}
-\begin{lstlisting}
-# cd /usr/src
-# ./build.sh -O ../obj -T ../tools -U distribution
-# ./build.sh -O ../obj -T ../tools kernel=YOUR_KERNEL
-# cp /netbsd /netbsd.old
-# cp /usr/obj/.../netbsd /
-# shutdown -r now
-# ./build.sh -O ../obj -T ../tools -U install=/
-# /usr/sbin/etcupdate -s /usr/src
-\end{lstlisting}
-
-\textbf{\color{blueheader}Flash Plugin Support}
-\begin{lstlisting}
-# echo "procfs /emul/linux/proc procfs ro,linux" >> /etc/fstab
-# mount /emul/linux/proc
-# cd /usr/pkgsrc/www/nspluginwrapper && make install
-# cd /usr/pkgsrc/multimedia/ns-flash && make install
-$ nspluginwrapper -i /usr/pkg/lib/netscape/plugins/libflashplayer.so
-\end{lstlisting}
-
-\textbf{\color{blueheader}Mount ISO Image}
-\begin{lstlisting}
-# vnconfig -v -c /dev/vnd0d output.iso
-# mount -t cd9660 /dev/vnd0a /mnt
-# umount /mnt
-# vnconfig -u vnd0d
+*(.)      -> match file 
+*(/)      -> match dir
+*(@)      -> match symlink
 \end{lstlisting}
 
 \end{multicols}
